@@ -10,6 +10,7 @@ type Feedback = {
 const store: Feedback[] = []
 
 export async function GET() {
+    console.log(`[${new Date().toISOString()}] GET /api/feedback`)
     return Response.json({ items: store.slice(-20).reverse() })
 }
 
@@ -26,6 +27,8 @@ export async function POST(req: Request) {
         message: String(body.message).slice(0, 500),
         createdAt: new Date().toISOString()
     }
+
+    console.log(`[${new Date().toISOString()}] POST /api/feedback: ${item.name} says "${item.message}"`)
 
     store.push(item)
     return Response.json({ ok: true })
